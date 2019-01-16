@@ -9,18 +9,19 @@ def quit():
     exit()
 
 def canPull():
-    return controls.exists("accept.png") or controls.exists("complete.png")
+    return controls.exists("request.png") or controls.exists("complete.png")
 
 def turnIn():
     if exists("complete.png"):
-        click("complete.png")
-        wait("request.png", 20)
+        click("complete.png")        
 
-def decline():
-    click("decline.png")
+def request():
     wait("request.png", 20)
     click("request.png")
     wait("accept.png", 20)
+
+def decline():
+    click("decline.png")
 
 def accept():
     click("accept.png")
@@ -28,20 +29,19 @@ def accept():
     click("close.png")
 
 def goodBurner():
-    return ship.exists("hawk.png", 0) or ship.exists("enyo.png", 0)
+    return ship.exists("hawk.png") or ship.exists("enyo.png")
 
 def isTeam():
-    return mission.exists("team.png", 0)
+    return mission.exists("team.png")
 
 def procureTeam():
-    while not controls.exists("complete.png"):
+    while True:
+        request()
         if isTeam():
             if goodBurner():
                 accept()
-            else:
-                decline()
-        elif exists("decline.png"):
-            decline()        
+                break
+        decline()
 
 while canPull():
     turnIn()
