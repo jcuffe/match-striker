@@ -1,35 +1,41 @@
+Settings.MoveMouseDelay = 0.4
 Settings.MinSimilarity = 0.8
-Env.addHotkey(Key.F1, KeyModifier.ALT, quit)
+Settings.AutoWaitTimeout = 20
+Env.addHotkey(Key.F1, KeyModifier.ALT, exit)
 
 mission = Region(906,72,182,27)
 ship = Region(904,133,108,29)
 controls = Region(476,557,837,30)
 
-def quit():
-    exit()
+mission.setAutoWaitTimeout(0)
+ship.setAutoWaitTimeout(0)
 
 def canPull():
-    return controls.exists("request.png") or controls.exists("complete.png")
+    return controls.findBest("request.png", "complete.png")
 
 def turnIn():
-    if exists("complete.png"):
-        click("complete.png")        
+    if controls.exists("complete.png", 0):
+        controls.click()        
 
+# ask for a mission, wait until offer is loaded
 def request():
-    wait("request.png", 20)
-    click("request.png")
-    wait("accept.png", 20)
+    controls.wait("request.png")
+    controls.click()
+    controls.wait("accept.png")
 
+# controls should always have decline as last match here
 def decline():
-    click("decline.png")
+    controls.click("decline.png")
 
+# take a mission, then close the window
 def accept():
-    click("accept.png")
-    wait("complete.png", 20)
-    click("close.png")
+    controls.wait("accept.png")
+    controls.click()
+    controls.wait("complete.png")
+    controls.click("close.png")
 
 def goodBurner():
-    return ship.exists("hawk.png") or ship.exists("enyo.png")
+    return ship.findBest("hawk.png", "enyo.png")
 
 def isTeam():
     return mission.exists("team.png")
@@ -40,6 +46,7 @@ def procureTeam():
         if isTeam():
             if goodBurner():
                 accept()
+                wait(1)
                 break
         decline()
 
