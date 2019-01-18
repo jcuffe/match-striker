@@ -1,5 +1,5 @@
 Settings.MoveMouseDelay = 0.3
-Settings.MinSimilarity = 0.8
+Settings.MinSimilarity = 0.9
 Settings.AutoWaitTimeout = 0
 
 def canPull():
