@@ -1,4 +1,4 @@
-Settings.MoveMouseDelay = 0.3
+Settings.MoveMouseDelay = 0.2
 Settings.MinSimilarity = 0.9
 Settings.AutoWaitTimeout = 0
 
@@ -12,12 +12,11 @@ def prepare():
 def request():
     wait("request.png", 20)
     click()
-    wait("location.png", 20)
+    wait("decline.png", 20)
 
 # controls should always have decline as last match here
 def decline():
-    wait("decline.png", 20)
-    click()
+    click("decline.png")
 
 # take a mission, then close the window
 def accept():
@@ -30,6 +29,7 @@ def goodBurner():
     return findBest("hawk.png", "enyo.png")
 
 def isTeam():
+    wait("location.png", 20)
     return exists("team.png")
 
 def procureTeam():
