@@ -42,6 +42,10 @@ def procureTeam():
                 break
         decline()
 
-while canPull():
-    prepare()
-    procureTeam()
+def getRegion():
+    return Region(find("location.png").nearby(500))
+
+with getRegion():
+    while canPull():
+        prepare()
+        procureTeam()
